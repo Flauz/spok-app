@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { signInWithGoogle } from "../../firebase/utils"
+import { signInWithGoogle, auth } from "../../firebase/utils"
 import Buttn from '../Buttn';
+import { Email } from '@material-ui/icons';
 
 function Copyright() {
     return (
@@ -50,11 +51,24 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function SignIn() {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
     const classes = useStyles();
 
+    const handleChangeEmail = e => setEmail(e.target.value)
+    const handleChangePassword = e => setPassword(e.target.value)
 
     const handleSubmit = async e => {
         e.preventDefault();
+
+        try {
+            await auth.signInWithEmailAndPassword(email, password)
+            setEmail('')
+            setPassword('')
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -78,7 +92,10 @@ export default function SignIn() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        value={email}
+                        onChange={handleChangeEmail}
                     />
+                    {console.log(email, password)}
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -89,6 +106,8 @@ export default function SignIn() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        value={password}
+                        onChange={handleChangePassword}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}

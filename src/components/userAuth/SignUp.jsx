@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { AlternateEmail } from '@material-ui/icons';
+import { auth, handleUserProfile } from '../../firebase/utils'
 
 function Copyright() {
     return (
@@ -47,7 +49,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [errors, setErrors] = useState([])
+
+
     const classes = useStyles();
+
+
+
+    const handleSubmit = async e => {
+        e.preventDefault()
+
+        if (password !== confirmPassword) {
+            setErrors(["les mots de passe ne correspondent pas."])
+            return
+        }
+        try {
+            const { user } = await auth.createUserWithEmailAndPassword(email, password)
+
+            await handleUserProfile(user, { firstName })
+
+            setFirstName('')
+            setLastName('')
+            setEmail('')
+            setPassword('')
+            setConfirmPassword('')
+        } catch (err) {
+        }
+    }
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -58,8 +92,11 @@ export default function SignUp() {
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign up
-        </Typography>
-                <form className={classes.form} noValidate>
+                </Typography>
+
+                {errors.length > 0 && errors.map((err, i) => <Typography key={i}>{err}</Typography>)}
+
+                <form onSubmit={handleSubmit} className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -69,19 +106,24 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="firstName"
-                                label="First Name"
+                                label="Prénom"
                                 autoFocus
+                                onChange={(e) => setFirstName(e.target.value)}
+                                value={firstName}
                             />
                         </Grid>
+                        {console.log(firstName, lastName, email, password, confirmPassword)}
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 variant="outlined"
                                 required
                                 fullWidth
                                 id="lastName"
-                                label="Last Name"
+                                label="Nom"
                                 name="lastName"
                                 autoComplete="lname"
+                                onChange={(e) => setLastName(e.target.value)}
+                                value={lastName}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -90,9 +132,11 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email Address"
+                                label="Adresse Email"
                                 name="email"
                                 autoComplete="email"
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -101,16 +145,33 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label="mot de passe"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Confirmation mot de passe"
+                                type="password"
+                                id="confirmpassword"
+                                autoComplete="current-password"
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                value={confirmPassword}
+
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                label="I want to receive inspiration, marketing promotions and updates via email."
+                                label="I want to receive promotions and updates via email."
                             />
                         </Grid>
                     </Grid>

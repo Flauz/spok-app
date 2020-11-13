@@ -29,8 +29,12 @@ const Routes = ({ currentUser }) => {
                 <Route path="/login" render={() => currentUser ? <Redirect to="/" />
                     : (
                         <Login />
-                    )} />
-                <Route path="/registration" component={SignUp} />
+                    )}
+                />
+                <Route path="/registration" render={() => currentUser ? <Redirect to="/" />
+                    : <SignUp />}
+                />
+
             </Switch>
         </>
     )
