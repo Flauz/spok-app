@@ -81,7 +81,7 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5">
                     Sign in
         </Typography>
-                <form className={classes.form} >
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -147,11 +147,6 @@ export default function SignIn() {
                             </Link>
                         </Grid>
                     </Grid>
-                </form>
-                <form onSubmit={handleSubmit}>
-                    <Buttn onClick={signInWithGoogle}>
-                        se connecter avec google
-                    </Buttn>
                 </form>
             </div>
             <Box mt={8}>

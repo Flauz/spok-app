@@ -49,8 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
+    const [displayName, setDisplayName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -71,14 +70,14 @@ export default function SignUp() {
         try {
             const { user } = await auth.createUserWithEmailAndPassword(email, password)
 
-            await handleUserProfile(user, { firstName })
+            await handleUserProfile(user, { displayName })
 
-            setFirstName('')
-            setLastName('')
+            setDisplayName('')
             setEmail('')
             setPassword('')
             setConfirmPassword('')
         } catch (err) {
+            console.log(err)
         }
     }
 
@@ -98,34 +97,21 @@ export default function SignUp() {
 
                 <form onSubmit={handleSubmit} className={classes.form} noValidate>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12}>
                             <TextField
                                 autoComplete="fname"
-                                name="firstName"
+                                name="displayName"
                                 variant="outlined"
                                 required
                                 fullWidth
                                 id="firstName"
-                                label="Prénom"
+                                label="Prénom et Nom"
                                 autoFocus
-                                onChange={(e) => setFirstName(e.target.value)}
-                                value={firstName}
+                                onChange={(e) => setDisplayName(e.target.value)}
+                                value={displayName}
                             />
                         </Grid>
-                        {console.log(firstName, lastName, email, password, confirmPassword)}
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Nom"
-                                name="lastName"
-                                autoComplete="lname"
-                                onChange={(e) => setLastName(e.target.value)}
-                                value={lastName}
-                            />
-                        </Grid>
+
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
