@@ -1,7 +1,7 @@
-import React from "react"
+import React, {useEffect} from "react"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import {auth , handleUserProfile} from "./firebase/utils"
-
+import {setCurrentUser} from './redux/actions/userActions'
 
 import Header from "./components/Header/Header"
 import Routes from './Routes'

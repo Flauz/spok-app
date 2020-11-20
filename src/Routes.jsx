@@ -11,6 +11,7 @@ import {
 } from './components/index'
 import Login from './components/userAuth/Login'
 import SignUp from "./components/userAuth/SignUp"
+import Recovery from "./components/userAuth/Recovery"
 
 const Routes = ({ currentUser }) => {
 
@@ -33,6 +34,11 @@ const Routes = ({ currentUser }) => {
                 />
                 <Route path="/registration" render={() => currentUser ? <Redirect to="/" />
                     : <SignUp />}
+                />
+
+                <Route path="/recovery" render={() => (
+                    <Recovery />
+                )}
                 />
 
             </Switch>
