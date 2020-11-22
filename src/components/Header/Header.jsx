@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from "react-redux"
 import Logo from './Logo'
 import Navbar from "./Navbar"
 import Button from '@material-ui/core/Button';
@@ -22,8 +23,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Header = props => {
-    const { currentUser } = props
+
+const Header = () => {
+    const { currentUser } = useSelector(user => user.userReducer)
 
     const classes = useStyles();
     return (
@@ -41,10 +43,12 @@ const Header = props => {
                             deconnexion
                     </Button>
                     </Box>
+
                 }
+
                 {!currentUser &&
                     <Box className={classes.buttn}>
-                        <Button component={Link} to="/login" variant="outlined" color="primary">
+                        <Button component={Link} to="/signin" variant="outlined" color="primary">
                             se connecter
                         </Button>
                     </Box>
@@ -57,8 +61,5 @@ const Header = props => {
     )
 }
 
-Header.defaultProps = {
-    currentUser: null
-}
 
 export default Header

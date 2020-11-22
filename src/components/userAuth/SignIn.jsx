@@ -50,14 +50,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function SignIn() {
+const SignIn = props => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const classes = useStyles();
-
-    const handleChangeEmail = e => setEmail(e.target.value)
-    const handleChangePassword = e => setPassword(e.target.value)
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -93,7 +90,7 @@ export default function SignIn() {
                         autoComplete="email"
                         autoFocus
                         value={email}
-                        onChange={handleChangeEmail}
+                        onChange={e => setEmail(e.target.value)}
                     />
                     {console.log(email, password)}
                     <TextField
@@ -107,7 +104,7 @@ export default function SignIn() {
                         id="password"
                         autoComplete="current-password"
                         value={password}
-                        onChange={handleChangePassword}
+                        onChange={e => setPassword(e.target.value)}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
@@ -155,3 +152,5 @@ export default function SignIn() {
         </Container>
     );
 }
+
+export default SignIn

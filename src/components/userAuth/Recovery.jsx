@@ -15,7 +15,6 @@ import Container from '@material-ui/core/Container';
 import { auth } from "../../firebase/utils"
 import Buttn from '../Buttn';
 import { Email } from '@material-ui/icons';
-
 import { withRouter } from "react-router-dom"
 
 function Copyright() {
@@ -24,7 +23,7 @@ function Copyright() {
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
                 Your Website
-      </Link>{' '}
+            </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -52,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Recovery = () => {
+const Recovery = props => {
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [errors, setErrors] = useState("")
 
     const classes = useStyles();
 
@@ -69,12 +68,13 @@ const Recovery = () => {
 
             await auth.sendPasswordResetEmail(email, config)
                 .then(() =>
-                    this.props.history.push('/login')
+                    props.history.push('/login')
                 )
                 .catch(
-                    () => [
-                        console.log('Something went wrong')
-                    ]
+                    () => {
+                        const err = ["L'email n'a pas été trouvé. Merci de réessayer"]
+                        setErrors(err)
+                    }
                 )
 
         } catch (err) {
@@ -91,7 +91,10 @@ const Recovery = () => {
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in
-        </Typography>
+                </Typography>
+
+                {errors.length > 0 && errors.map((err, i) => <Typography key={i}>{err}</Typography>)}
+
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
                         variant="outlined"
@@ -106,7 +109,7 @@ const Recovery = () => {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
-                    {console.log(email, password)}
+
 
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}

@@ -12,6 +12,7 @@ import {
 import Login from './components/userAuth/Login'
 import SignUp from "./components/userAuth/SignUp"
 import Recovery from "./components/userAuth/Recovery"
+import SignIn from './components/userAuth/SignIn'
 
 const Routes = ({ currentUser }) => {
 
@@ -27,12 +28,12 @@ const Routes = ({ currentUser }) => {
                 <Route path="/menu" component={Menu} />
                 <Route path="/contact" component={Contact} />
                 {/* ROUTES USERPROFIL */}
-                <Route path="/login" render={() => currentUser ? <Redirect to="/" />
+                <Route path="/signin" render={() => currentUser ? <Redirect to="/" />
                     : (
-                        <Login />
+                        <SignIn />
                     )}
                 />
-                <Route path="/registration" render={() => currentUser ? <Redirect to="/" />
+                <Route path="/signup" render={() => currentUser ? <Redirect to="/" />
                     : <SignUp />}
                 />
 

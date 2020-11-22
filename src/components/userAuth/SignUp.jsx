@@ -48,17 +48,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignUp() {
+const SignUp = props => {
     const [displayName, setDisplayName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errors, setErrors] = useState([])
 
-
     const classes = useStyles();
-
-
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -81,7 +78,6 @@ export default function SignUp() {
         }
     }
 
-
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -92,9 +88,7 @@ export default function SignUp() {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-
                 {errors.length > 0 && errors.map((err, i) => <Typography key={i}>{err}</Typography>)}
-
                 <form onSubmit={handleSubmit} className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -107,11 +101,10 @@ export default function SignUp() {
                                 id="firstName"
                                 label="Prénom et Nom"
                                 autoFocus
-                                onChange={(e) => setDisplayName(e.target.value)}
+                                onChange={e => setDisplayName(e.target.value)}
                                 value={displayName}
                             />
                         </Grid>
-
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
@@ -121,7 +114,7 @@ export default function SignUp() {
                                 label="Adresse Email"
                                 name="email"
                                 autoComplete="email"
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={e => setEmail(e.target.value)}
                                 value={email}
                             />
                         </Grid>
@@ -135,7 +128,7 @@ export default function SignUp() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={e => setPassword(e.target.value)}
                                 value={password}
                             />
                         </Grid>
@@ -149,7 +142,7 @@ export default function SignUp() {
                                 type="password"
                                 id="confirmpassword"
                                 autoComplete="current-password"
-                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                onChange={e => setConfirmPassword(e.target.value)}
                                 value={confirmPassword}
 
                             />
@@ -185,3 +178,5 @@ export default function SignUp() {
         </Container>
     );
 }
+
+export default SignUp
