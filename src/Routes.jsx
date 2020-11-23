@@ -9,7 +9,7 @@ import {
     Menu,
     Contact
 } from './components/index'
-import Login from './components/userAuth/Login'
+import Profil from "./components/userAuth/Profil"
 import SignUp from "./components/userAuth/SignUp"
 import Recovery from "./components/userAuth/Recovery"
 import SignIn from './components/userAuth/SignIn'
@@ -39,6 +39,11 @@ const Routes = ({ currentUser }) => {
 
                 <Route path="/recovery" render={() => (
                     <Recovery />
+                )}
+                />
+
+                <Route path="/profil" render={() => (
+                    <Profil />
                 )}
                 />
 

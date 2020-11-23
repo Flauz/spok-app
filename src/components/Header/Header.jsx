@@ -37,13 +37,20 @@ const Header = () => {
                         commander en ligne
                 </Button>
                 </Box>
+
+                {currentUser &&
+                    <Box className={classes.buttn}>
+                        <Button variant="outlined" color="primary" component={Link} to="/profil">
+                            Profil
+                    </Button>
+                    </Box>
+                }
                 {currentUser &&
                     <Box className={classes.buttn} onClick={() => auth.signOut()}>
                         <Button variant="outlined" color="primary">
                             deconnexion
                     </Button>
                     </Box>
-
                 }
 
                 {!currentUser &&
@@ -53,6 +60,8 @@ const Header = () => {
                         </Button>
                     </Box>
                 }
+
+
             </Box>
             <Box>
                 <Navbar />

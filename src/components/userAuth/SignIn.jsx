@@ -15,6 +15,8 @@ import Container from '@material-ui/core/Container';
 import { signInWithGoogle, auth } from "../../firebase/utils"
 import Buttn from '../Buttn';
 import { Email } from '@material-ui/icons';
+import { useDispatch } from "react-redux"
+import { signInUser } from "../../redux/actions/userActions"
 
 function Copyright() {
     return (
@@ -53,19 +55,16 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = props => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const dispatch = useDispatch()
 
     const classes = useStyles();
 
     const handleSubmit = async e => {
         e.preventDefault();
+        dispatch(signInUser({ email, password }))
+        setEmail('')
+        setPassword('')
 
-        try {
-            await auth.signInWithEmailAndPassword(email, password)
-            setEmail('')
-            setPassword('')
-        } catch (err) {
-            console.log(err)
-        }
     }
 
     return (
