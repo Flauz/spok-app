@@ -1,9 +1,8 @@
 import React, {useEffect} from "react"
-import {useSelector} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import {auth , handleUserProfile} from "./firebase/utils"
 import {setCurrentUser} from './redux/actions/userActions'
-
 import Header from "./components/Header/Header"
 import Routes from './Routes'
 import { AnimatePresence } from 'framer-motion'
@@ -12,11 +11,12 @@ import './App.css';
 import Footer from "./components/Footer/Footer";
 
 
-const App = props => {
+const App = () => {
   const {currentUser} = useSelector(user => user.userReducer)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const {setCurrentUser, currentUser} = props
+  
 
     const authListener = auth.onAuthStateChanged(async userAuth => {
       if (userAuth){
@@ -28,7 +28,7 @@ const App = props => {
           })
         })
       };
-      setCurrentUser(userAuth)
+      dispatch(setCurrentUser(userAuth))
     })
 
     return () => {
@@ -48,8 +48,4 @@ const App = props => {
   );
 }
 
-const mapDispathToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-})
-
-export default connect(null, mapDispathToProps)(App);
+export default App

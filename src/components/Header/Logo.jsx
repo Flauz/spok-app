@@ -8,7 +8,10 @@ const useStyles = makeStyles({
     root: {
         display: "flex",
         alignItems: "flex-end",
-        textDecoration: "none"
+        textDecoration: "none",
+        '&:hover': {
+            textDecoration: "none"
+        }
 
     }
 });

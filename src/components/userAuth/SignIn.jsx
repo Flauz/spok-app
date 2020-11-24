@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,19 +12,19 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { signInWithGoogle, auth } from "../../firebase/utils"
-import Buttn from '../Buttn';
+import { signInWithGoogle } from "../../firebase/utils"
 import { Email } from '@material-ui/icons';
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { signInUser } from "../../redux/actions/userActions"
+import { useHistory } from "react-router-dom"
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-      </Link>{' '}
+                Spok developped by Flauz <br />
+            </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -52,19 +52,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SignIn = props => {
+const SignIn = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const { signInSucces } = useSelector(user => user.userReducer)
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const classes = useStyles();
+
+    useEffect(() => {
+        if (signInSucces) {
+            setEmail('')
+            setPassword('')
+            history.push('/')
+        }
+    }, [signInSucces])
 
     const handleSubmit = async e => {
         e.preventDefault();
         dispatch(signInUser({ email, password }))
-        setEmail('')
-        setPassword('')
-
     }
 
     return (
@@ -75,7 +82,7 @@ const SignIn = props => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    connectez-vous
         </Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
@@ -84,7 +91,7 @@ const SignIn = props => {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Adresse email"
                         name="email"
                         autoComplete="email"
                         autoFocus
@@ -98,7 +105,7 @@ const SignIn = props => {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Mot de passe"
                         type="password"
                         id="password"
                         autoComplete="current-password"
@@ -107,7 +114,7 @@ const SignIn = props => {
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
+                        label="rester connecté"
                     />
                     <Button
                         type="submit"
@@ -116,7 +123,7 @@ const SignIn = props => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign In
+                        je me connecte
                     </Button>
 
                     <Button
@@ -128,18 +135,15 @@ const SignIn = props => {
                     >
                         se connecter avec google
                     </Button>
-
-
-
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
+                            <Link href="/recovery" variant="body2">
+                                Mot de passe oublié ?
                     </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="/registration" variant="body2">
-                                {"Don't have an account? Sign Up"}
+                            <Link href="/signup" variant="body2">
+                                {"Inscrivez-vous ici !"}
                             </Link>
                         </Grid>
                     </Grid>

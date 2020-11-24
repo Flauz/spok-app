@@ -6,3 +6,7 @@ body{
   
   background: blue;
 }
+
+a {
+  color: "inherit"
+}

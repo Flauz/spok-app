@@ -6,12 +6,22 @@ const theme = createMuiTheme()
 
 const useStyles = makeStyles({
     container: {
+        display: "flex",
+        justifyContent: "space-around"
 
     },
     insideContainer: {
         width: "40%",
         marginTop: theme.spacing(8),
-        marginLeft: theme.spacing(6)
+
+    },
+    pictureContainer: {
+        display: "flex",
+        flexDirection: "column",
+        marginTop: theme.spacing(8)
+    },
+    picture: {
+        marginTop: theme.spacing(6)
     },
     typoSubtitle: {
         textAlign: "justify"
@@ -34,9 +44,9 @@ const ViewEngagements = () => {
     const classes = useStyles()
 
     return (
-        <Box>
-            <Box>
-                <Box className={classes.insideContainer}>
+        <Box className={classes.container}>
+            <Box className={classes.insideContainer}>
+                <Box >
                     <Typography variant="h5">
                         Par essence, Spok est engagé
                     </Typography>
@@ -55,7 +65,7 @@ const ViewEngagements = () => {
 
                     <Typography className={classes.typoBody1} variant="body1">Depuis 2005, nous voulons du bon, du beau, mais pas que.</Typography>
                 </Box>
-                <Box className={classes.insideContainer}>
+                <Box >
                     <Typography variant="h5">
                         2017
                     </Typography>
@@ -63,7 +73,7 @@ const ViewEngagements = () => {
                         Nos boites sont désormais constituées de papier exclusivement issu de forêts gérées. Une fois recyclées, elles sont transformées en bobines à papier recyclé, elles-mêmes utilisées pour fabriquer nos sacs et nos serviettes. La boucle est bouclée.
                     </Typography>
                 </Box>
-                <Box className={classes.insideContainer}>
+                <Box >
                     <Typography variant="h5">
                         2018
                     </Typography>
@@ -71,7 +81,7 @@ const ViewEngagements = () => {
                         Nous rencontrons Kawa qui source les meilleurs cafés de spécialité directement auprès de producteur. Torréfié artisanalement et moulu sur place à la commande, c’est la fin des capsules dans tous les nouveaux Spok.
                     </Typography>
                 </Box>
-                <Box className={classes.insideContainer}>
+                <Box >
                     <Typography variant="h5">
                         2019
                     </Typography>
@@ -83,7 +93,7 @@ const ViewEngagements = () => {
                     </Typography>
 
                 </Box>
-                <Box className={classes.insideContainer}>
+                <Box >
                     <Typography variant="h5">
                         En 2020, cela ne suffit plus
                     </Typography>
@@ -110,6 +120,10 @@ const ViewEngagements = () => {
                         Adieux bouteilles en plastique (et canettes) depuis janvier 2020. Nous nous engageons également à supprimer toute trace de plastique à usage unique pour la fin d'année. Nous cherchons même des solutions pour nous débarrasser de tout packaging.
                     </Typography>
                 </Box>
+            </Box>
+            <Box className={classes.pictureContainer}>
+                <img src="https://zupimages.net/up/20/48/p8tc.png" alt="image" />
+                <img className={classes.picture} src="https://zupimages.net/up/20/48/c9ue.png" alt='image' />
             </Box>
         </Box>
     )

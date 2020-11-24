@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,10 +12,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { auth } from "../../firebase/utils"
-import Buttn from '../Buttn';
 import { Email } from '@material-ui/icons';
 import { withRouter } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { useHistory } from "react-router-dom"
+import { resetPassword } from '../../redux/actions/userActions';
 
 function Copyright() {
     return (
@@ -51,36 +52,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Recovery = props => {
+const ResetPassword = () => {
     const [email, setEmail] = useState("")
     const [errors, setErrors] = useState("")
-
+    const { resetPasswordSuccess } = useSelector(user => user.userReducer)
+    const { resetPasswordError } = useSelector(user => user.userReducer)
+    const history = useHistory()
+    const dispatch = useDispatch()
     const classes = useStyles();
 
-    const handleSubmit = async e => {
+    const handleSubmit = e => {
         e.preventDefault();
-
-        try {
-
-            const config = {
-                url: 'http://localhost:3000/login'
-            }
-
-            await auth.sendPasswordResetEmail(email, config)
-                .then(() =>
-                    props.history.push('/login')
-                )
-                .catch(
-                    () => {
-                        const err = ["L'email n'a pas été trouvé. Merci de réessayer"]
-                        setErrors(err)
-                    }
-                )
-
-        } catch (err) {
-            console.log(err)
-        }
+        dispatch(resetPassword({ email }))
     }
+
+    useEffect(() => {
+        if (resetPasswordError.length > 0) {
+            setErrors(resetPasswordError)
+        }
+    }, [resetPasswordError])
+
+    useEffect(() => {
+        if (resetPasswordSuccess) {
+            setEmail('')
+            history.push("/signin")
+        }
+    }, [resetPasswordSuccess])
 
     return (
         <Container component="main" maxWidth="xs">
@@ -90,7 +87,7 @@ const Recovery = props => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Récuperer mon mot de passe
                 </Typography>
 
                 {errors.length > 0 && errors.map((err, i) => <Typography key={i}>{err}</Typography>)}
@@ -122,7 +119,7 @@ const Recovery = props => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign In
+                        continuer
                     </Button>
 
 
@@ -148,4 +145,4 @@ const Recovery = props => {
     );
 }
 
-export default withRouter(Recovery)
+export default withRouter(ResetPassword)

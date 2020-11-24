@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,7 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { AlternateEmail } from '@material-ui/icons';
-import { auth, handleUserProfile } from '../../firebase/utils'
+import { useHistory } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { signUpUser } from "../../redux/actions/userActions"
+
 
 function Copyright() {
     return (
@@ -48,35 +51,40 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignUp = props => {
+const SignUp = () => {
     const [displayName, setDisplayName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errors, setErrors] = useState([])
+    const dispatch = useDispatch()
+    const { signUpSucces } = useSelector(user => user.userReducer)
+    const { signUpError } = useSelector(user => user.userReducer)
+    const history = useHistory()
 
     const classes = useStyles();
 
-    const handleSubmit = async e => {
+    const handleSubmit = e => {
         e.preventDefault()
+        dispatch(signUpUser({ displayName, email, password, confirmPassword }))
+    }
 
-        if (password !== confirmPassword) {
-            setErrors(["les mots de passe ne correspondent pas."])
-            return
-        }
-        try {
-            const { user } = await auth.createUserWithEmailAndPassword(email, password)
-
-            await handleUserProfile(user, { displayName })
-
+    useEffect(() => {
+        if (signUpSucces) {
             setDisplayName('')
             setEmail('')
             setPassword('')
             setConfirmPassword('')
-        } catch (err) {
-            console.log(err)
+            setErrors([])
+            history.push('/')
         }
-    }
+    }, [signUpSucces])
+
+    useEffect(() => {
+        if (signUpError.length > 0) {
+            setErrors(signUpError)
+        }
+    }, [signUpError])
 
     return (
         <Container component="main" maxWidth="xs">
@@ -86,7 +94,7 @@ const SignUp = props => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Inscrivez-vous rapidement
                 </Typography>
                 {errors.length > 0 && errors.map((err, i) => <Typography key={i}>{err}</Typography>)}
                 <form onSubmit={handleSubmit} className={classes.form} noValidate>
@@ -150,7 +158,7 @@ const SignUp = props => {
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                label="I want to receive promotions and updates via email."
+                                label="J'accepte de recevoir des offres promotionnelles par email."
                             />
                         </Grid>
                     </Grid>
@@ -161,12 +169,12 @@ const SignUp = props => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                        je m'inscris
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="/login" variant="body2">
-                                Already have an account? Sign in
+                            <Link href="/signin" variant="body2">
+                                Vous avez déja un compte ? Connectez-vous ici
                             </Link>
                         </Grid>
                     </Grid>

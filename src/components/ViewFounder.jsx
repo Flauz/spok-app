@@ -6,12 +6,13 @@ const theme = createMuiTheme()
 
 const useStyles = makeStyles({
     container: {
-
+        display: "flex",
+        justifyContent: "space-around"
     },
     insideContainer: {
         width: "40%",
         marginTop: theme.spacing(8),
-        marginLeft: theme.spacing(6)
+
     },
     typoSubtitle: {
         textAlign: "justify"
@@ -48,6 +49,9 @@ const ViewFounder = () => {
                 <Typography className={classes.typoBody} variant="body1">
                     Séduit par la possibilité d’offrir de bons plats autrement, Christophe développe la promesse Spok, de Marseille, à partout en France avec la volonté d’allier le meilleur de la restauration traditionnelle, dont il connaît tous les codes, à la restauration rapide, dont il a pressenti l’essor.
                 </Typography>
+            </Box>
+            <Box>
+                <img src="https://static.wixstatic.com/media/f67050_7090ff5c86a24b56bdb01d07647dbc9d~mv2.jpg/v1/fill/w_419,h_623,al_c,q_80,usm_0.66_1.00_0.01/jfynnlVb.webp" alt="" />
             </Box>
         </Box>
     )

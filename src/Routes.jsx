@@ -11,7 +11,7 @@ import {
 } from './components/index'
 import Profil from "./components/userAuth/Profil"
 import SignUp from "./components/userAuth/SignUp"
-import Recovery from "./components/userAuth/Recovery"
+import Recovery from "./components/userAuth/ResetPassword"
 import SignIn from './components/userAuth/SignIn'
 
 const Routes = ({ currentUser }) => {
