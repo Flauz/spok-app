@@ -8,15 +8,21 @@ import Routes from './Routes'
 import { AnimatePresence } from 'framer-motion'
 import './App.css';
 import Footer from "./components/Footer/Footer";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
+const theme = createMuiTheme({
+  palette:{
+    background: {
+      default:"#faf2e6"
+    }
+  }
+})
 
 const App = () => {
   const {currentUser} = useSelector(user => user.userReducer)
   const dispatch = useDispatch()
 
   useEffect(() => {
-  
-
     const authListener = auth.onAuthStateChanged(async userAuth => {
       if (userAuth){
         const userRef = await handleUserProfile(userAuth)
@@ -37,12 +43,14 @@ const App = () => {
 
   return (
     <div className="App">
-      <CssBaseline />
-      <Header />
-      <AnimatePresence>
-        <Routes currentUser={currentUser}/>
-      </AnimatePresence>
-      <Footer />
+      <MuiThemeProvider theme={theme} >
+        <CssBaseline />
+        <Header />
+        <AnimatePresence>
+          <Routes currentUser={currentUser}/>
+        </AnimatePresence>
+        <Footer />
+      </MuiThemeProvider>
     </div>
   );
 }

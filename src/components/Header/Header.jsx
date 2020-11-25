@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     buttn: {
         '& > *': {
             margin: theme.spacing(1),
+
         },
     },
     insideContainer: {
@@ -54,8 +55,8 @@ const Header = () => {
             <Box className={classes.insideContainer}>
                 <Logo />
                 <Box className={classes.groupButtn}>
-                    <Box className={classes.buttn}>
-                        <Button variant="outlined" color="primary">
+                    <Box className={classes.buttn} style={{ color: "#264254" }}>
+                        <Button variant="outlined" style={{ color: "#264254" }}>
                             commander en ligne
                         </Button>
                     </Box>

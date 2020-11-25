@@ -21,10 +21,10 @@ const Logo = () => {
 
     return (
         <Box component={Link} to="/" className={classes.root}>
-            <Typography variant="h1" style={{ color: "black" }}>
+            <Typography variant="h1" style={{ color: "#303234" }}>
                 spok.
             </Typography>
-            <Typography style={{ marginBottom: "16px", color: "black" }}>
+            <Typography style={{ marginBottom: "16px", color: "#303234" }}>
                 cantines de chefs
             </Typography>
         </Box>
