@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import Logo from './Logo'
 import Navbar from "./Navbar"
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     insideContainer: {
         display: "flex",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
         alignItems: "center",
         padding: theme.spacing(6)
     },
@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
     const { currentUser } = useSelector(user => user.userReducer)
     const [anchorEl, setAnchorEl] = useState(null)
-
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -62,35 +61,37 @@ const Header = () => {
                     </Box>
 
                     <Box>
+                        <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                            <AccountCircleIcon />
+                        </IconButton>
                         {currentUser &&
-                            <>
-                                <ButtonGroup
-                                    orientation="vertical"
-                                    color="primary"
-                                    aria-label="vertical outlined primary button group"
+                            (
+                                <Menu
+                                    id="simple-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
                                 >
-                                    <Button component={Link} to="/profil">
-                                        Profil
-                                    </Button>
-                                    <Button onClick={() => auth.signOut()}>
-                                        deconnexion
-                                    </Button>
-                                </ButtonGroup>
-                            </>
+                                    <MenuItem
+                                        component={Link}
+                                        to="/profil"
+                                        onClick={handleClose}
+                                    >
+                                        Profile
+                                    </MenuItem>
+                                    <MenuItem
+                                        onClick={() => {
+                                            auth.signOut()
+                                            handleClose()
+                                        }}
+                                    >
+                                        Déconnexion
+                                    </MenuItem>
+                                </Menu>
+                            )
                         }
-
-                        {!currentUser &&
-                            <Box className={classes.buttn}>
-                                <Button component={Link} to="/signin" variant="outlined" color="primary">
-                                    se connecter
-                        </Button>
-                            </Box>
-                        }
-
-                        <div>
-                            <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                <AccountCircleIcon />
-                            </IconButton>
+                        {!currentUser && (
                             <Menu
                                 id="simple-menu"
                                 anchorEl={anchorEl}
@@ -98,12 +99,16 @@ const Header = () => {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
-                                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                <MenuItem component={Link} to="/signin" onClick={handleClose}>Se connecter</MenuItem>
+                                <MenuItem component={Link} to="/signup" onClick={handleClose}>S'inscire</MenuItem>
                             </Menu>
-                        </div>
-
+                        )
+                        }
+                    </Box>
+                    <Box>
+                        <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                            <LocalMallIcon />
+                        </IconButton>
                     </Box>
                 </Box>
             </Box>

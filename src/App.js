@@ -6,7 +6,6 @@ import {setCurrentUser} from './redux/actions/userActions'
 import Header from "./components/Header/Header"
 import Routes from './Routes'
 import { AnimatePresence } from 'framer-motion'
-import {connect} from "react-redux"
 import './App.css';
 import Footer from "./components/Footer/Footer";
 
