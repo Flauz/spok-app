@@ -8,8 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import spok1 from "../assets/spok-asset-1.png"
 import spok2 from "../assets/spok-asset-2.png"
 
-const ViewHome = () => {
+import { useSelector } from "react-redux"
 
+const ViewHome = () => {
+    const { currentUser } = useSelector(user => user.userReducer)
 
 
     const pictures = [
@@ -39,28 +41,29 @@ const ViewHome = () => {
         //         <span class="sr-only">Next</span>
         //     </a>
         // </div>
+        <>
+            {console.log("Hello :", currentUser)}
 
+            <Carousel autoPlay>
+                {pictures.map(({ image, title }) => (
 
-        <Carousel autoPlay>
-            {pictures.map(({ image, title }) => (
+                    <Card style={{
+                        height: "600px"
+                    }}>
+                        <CardMedia
+                            image={image}
+                            title={title}
+                            style={{
+                                height: 0,
+                                paddingTop: '56.25%'
 
-                <Card style={{
-                    height: "600px"
-                }}>
-                    <CardMedia
-                        image={image}
-                        title={title}
-                        style={{
-                            height: 0,
-                            paddingTop: '56.25%'
+                            }}
+                        />
+                    </Card>
 
-                        }}
-                    />
-                </Card>
-
-            ))}
-        </Carousel>
-
+                ))}
+            </Carousel>
+        </>
 
 
 

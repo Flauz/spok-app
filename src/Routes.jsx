@@ -13,6 +13,8 @@ import Profil from "./components/userAuth/Profil"
 import SignUp from "./components/userAuth/SignUp"
 import Recovery from "./components/userAuth/ResetPassword"
 import SignIn from './components/userAuth/SignIn'
+import WithAdminAuth from './hoc/withAdminAuth'
+import ViewAdmin from './components/ViewAdmin'
 
 const Routes = ({ currentUser }) => {
 
@@ -43,10 +45,16 @@ const Routes = ({ currentUser }) => {
                 />
 
                 <Route path="/profil" render={() => (
-                    <Profil />
+                    !currentUser ? <Redirect to="/signin" /> : <Profil />
                 )}
                 />
 
+                <Route path="/admin" render={() => (
+                    <WithAdminAuth>
+                        <ViewAdmin />
+                    </WithAdminAuth>
+                )}
+                />
             </Switch>
         </>
     )
