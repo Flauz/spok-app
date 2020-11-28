@@ -15,6 +15,7 @@ import Recovery from "./components/userAuth/ResetPassword"
 import SignIn from './components/userAuth/SignIn'
 import WithAdminAuth from './hoc/withAdminAuth'
 import ViewAdmin from './components/ViewAdmin'
+import ViewOrder from './components/ViewOrder'
 
 const Routes = ({ currentUser }) => {
 
@@ -55,6 +56,9 @@ const Routes = ({ currentUser }) => {
                     </WithAdminAuth>
                 )}
                 />
+
+
+                <Route path="/order" render={() => <ViewOrder />} />
             </Switch>
         </>
     )

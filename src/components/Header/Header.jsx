@@ -56,7 +56,7 @@ const Header = () => {
                 <Logo />
                 <Box className={classes.groupButtn}>
                     <Box className={classes.buttn} style={{ color: "#264254" }}>
-                        <Button variant="outlined" style={{ color: "#264254" }}>
+                        <Button component={Link} to='/order' variant="outlined" style={{ color: "#264254" }}>
                             commander en ligne
                         </Button>
                     </Box>

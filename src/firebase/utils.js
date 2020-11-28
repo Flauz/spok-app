@@ -6,7 +6,7 @@ import { firebaseConfig } from "./config"
 firebase.initializeApp(firebaseConfig)
 
 export const auth = firebase.auth()
-export const firestone = firebase.firestore()
+export const db = firebase.firestore()
 
 const GoogleProvider = new firebase.auth.GoogleAuthProvider()
 GoogleProvider.setCustomParameters({prompt: 'select_account'})
@@ -15,7 +15,7 @@ export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider)
 export const handleUserProfile = async (userAuth, additionalData) => {
     if(!userAuth) return;
     const {uid} = userAuth
-    const userRef = firestone.doc(`users/${uid}`)
+    const userRef = db.doc(`users/${uid}`)
     const snapshot = await userRef.get()
 
     if (!snapshot.exists){
