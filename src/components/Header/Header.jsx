@@ -107,7 +107,7 @@ const Header = () => {
                         }
                     </Box>
                     <Box>
-                        <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        <IconButton component={Link} to="/cart" aria-controls="simple-menu" aria-haspopup="true">
                             <LocalMallIcon />
                         </IconButton>
                     </Box>

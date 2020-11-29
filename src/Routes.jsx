@@ -16,6 +16,7 @@ import SignIn from './components/userAuth/SignIn'
 import WithAdminAuth from './hoc/withAdminAuth'
 import ViewAdmin from './components/ViewAdmin'
 import ViewOrder from './components/ViewOrder'
+import ViewCart from './components/ViewCart'
 
 const Routes = ({ currentUser }) => {
 
@@ -58,7 +59,13 @@ const Routes = ({ currentUser }) => {
                 />
 
 
+                
                 <Route path="/order" render={() => <ViewOrder />} />
+
+                <Route path="/cart" render={() => (
+                    <ViewCart />
+                )}
+                />
             </Switch>
         </>
     )
