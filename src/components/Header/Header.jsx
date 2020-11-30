@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Link } from "react-router-dom"
 import { auth } from '../../firebase/utils'
+import { reduce } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
     buttn: {
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
     const { currentUser } = useSelector(user => user.userReducer)
+    const { cartItems } = useSelector(data => data.cartReducer)
     const [anchorEl, setAnchorEl] = useState(null)
 
     const handleClick = (event) => {
@@ -48,6 +50,10 @@ const Header = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const reduceTotal = (quantity, item) => quantity + item.quantity
+
+    const TotalCartItem = cartItems.reduce(reduceTotal, 0)
 
     const classes = useStyles();
     return (
@@ -109,6 +115,9 @@ const Header = () => {
                     <Box>
                         <IconButton component={Link} to="/cart" aria-controls="simple-menu" aria-haspopup="true">
                             <LocalMallIcon />
+                            {cartItems.length > 0 &&
+                                <div>({TotalCartItem})</div>
+                            }
                         </IconButton>
                     </Box>
                 </Box>
