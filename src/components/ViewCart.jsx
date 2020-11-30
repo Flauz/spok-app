@@ -11,14 +11,15 @@ const ViewCart = () => {
         <div>
             <h1>Votre panier</h1>
             <div>
-                {cartItems.length ? (cartItems.map((item, id) =>
-                    (
-                        <>
-                            <ProductCart item={item} key={id} />
-                            <div>TOTAL : {totalPrice}€</div>
-                        </>
-                    )
-                ))
+                {cartItems.length ? (
+
+                    <>
+                        {cartItems.map((item, id) => <ProductCart item={item} key={id} />)}
+                        <div>TOTAL : {totalPrice}€</div>
+                    </>
+
+
+                )
                     : <p>votre panier est vide</p>
                 }
             </div>
