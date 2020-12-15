@@ -1,18 +1,33 @@
+import { Box, Typography, createMuiTheme, Grid } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { db } from "../firebase/utils"
 import { setDataFromFirestore } from '../redux/actions/orderActions'
 import Product from "./Order/Product"
+import { makeStyles } from '@material-ui/styles'
 
 
+const theme = createMuiTheme()
+
+const useStyles = makeStyles({
+    container: {
+
+    },
+    productContainer: {
+
+    },
+    productCard: {
+
+    }
+})
 
 
 const ViewOrder = () => {
     const { dataCollections } = useSelector(data => data.orderReducer)
-    // const {cartItems} = useSelector(item => item.cartReducer)
     const dispatch = useDispatch()
     const [isLoaded, setIsLoaded] = useState(false)
 
+    const classes = useStyles()
 
     useEffect(() => {
         const desserts = db.collection('desserts')
@@ -33,16 +48,22 @@ const ViewOrder = () => {
     return (
         <>
             {!isLoaded ? "Loading..." :
-                <div>
-                    {console.log("HERE :", dataCollections)}
-                    <h1>Commandez en ligne</h1>
-                    {dataCollections.map((product, id) =>
-                        <Product
-                            key={id}
-                            item={product}
-                        />
-                    )}
-                </div>
+                <Box>
+                    <Typography variant="h3">Commandez en ligne</Typography>
+                    <Grid container justify="center">
+
+                        {dataCollections.map((product, id) =>
+                            <Grid item xs={12} sm={8} md={6}>
+                                <Product
+                                    className={classes.productCard}
+                                    key={id}
+                                    item={product}
+                                />
+                            </Grid>
+                        )}
+
+                    </Grid>
+                </Box>
             }
 
         </>

@@ -1,6 +1,8 @@
 import React from 'react'
 import { useSelector } from "react-redux"
 import ProductCart from "../components/Order/ProductCart"
+import StripeButton from './Stripe/StripeButton'
+import { Box, Typography } from "@material-ui/core"
 
 const ViewCart = () => {
     const { cartItems } = useSelector(cart => cart.cartReducer)
@@ -8,22 +10,20 @@ const ViewCart = () => {
     const totalPrice = cartItems.reduce(reduceTotalPrice, 0)
 
     return (
-        <div>
+        <Box>
             <h1>Votre panier</h1>
-            <div>
+            <Box>
                 {cartItems.length ? (
-
                     <>
                         {cartItems.map((item, id) => <ProductCart item={item} key={id} />)}
-                        <div>TOTAL : {totalPrice}€</div>
+                        <Typography variant="h6">TOTAL : {totalPrice}€</Typography>
+                        <StripeButton />
                     </>
-
-
                 )
-                    : <p>votre panier est vide</p>
+                    : <Typography variant="h6">votre panier est vide</Typography>
                 }
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 }
 
