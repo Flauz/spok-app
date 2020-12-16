@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMuiTheme } from "@material-ui/core"
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -16,8 +16,9 @@ const theme = createMuiTheme()
 const useStyles = makeStyles({
     root: {
         maxWidth: 345,
-        marginTop: theme.spacing(6),
-        margin: "auto"
+        maxHeight: 345,
+
+
     },
     media: {
         height: 140,
@@ -54,9 +55,6 @@ const Product = ({ item }) => {
             <CardActions>
                 <Button onClick={() => handleCart(item)} size="small" color="primary">
                     commander
-                </Button>
-                <Button size="small" color="primary">
-                    Learn More
                 </Button>
             </CardActions>
         </Card>

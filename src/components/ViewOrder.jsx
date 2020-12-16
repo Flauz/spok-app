@@ -18,6 +18,21 @@ const useStyles = makeStyles({
     },
     productCard: {
 
+    },
+    title: {
+        margin: theme.spacing(6)
+    },
+    containerMeal: {
+        margin: "auto"
+    },
+    containerDessert: {
+        // margin: theme.spacing(4)
+    },
+    mealTitle: {
+        // marginBottom: theme.spacing(5)
+    },
+    dessertTitle: {
+        // marginBottom: theme.spacing(4)
     }
 })
 
@@ -30,9 +45,9 @@ const ViewOrder = () => {
     const classes = useStyles()
 
     useEffect(() => {
-        const desserts = db.collection('desserts')
+        const lunch = db.collection('lunch')
         const products = []
-        desserts.get().then(snapshot => {
+        lunch.get().then(snapshot => {
             snapshot.docs.forEach(doc => {
                 products.push(doc.data())
             })
@@ -49,20 +64,43 @@ const ViewOrder = () => {
         <>
             {!isLoaded ? "Loading..." :
                 <Box>
-                    <Typography variant="h3">Commandez en ligne</Typography>
-                    <Grid container justify="center">
 
-                        {dataCollections.map((product, id) =>
-                            <Grid item xs={12} sm={8} md={6}>
-                                <Product
-                                    className={classes.productCard}
-                                    key={id}
-                                    item={product}
-                                />
-                            </Grid>
-                        )}
-
-                    </Grid>
+                    <Typography className={classes.title} variant="h3">Commandez en ligne</Typography>
+                    <Box className={classes.containerMeal}>
+                        <Typography className={classes.mealTitle} variant="h4">Nos Plats</Typography>
+                        <Grid container
+                            justify="center"
+                            alignItems="center"
+                        >
+                            {dataCollections.map((product, id) => (
+                                product.type && product.type === "meal" &&
+                                <Grid item xs={12} sm={8} md={6}>
+                                    <Product
+                                        className={classes.productCard}
+                                        key={id}
+                                        item={product}
+                                    />
+                                </Grid>
+                            )
+                            )}
+                        </Grid>
+                    </Box>
+                    <Box className={classes.containerDessert}>
+                        <Typography className={classes.dessertTitle} variant="h4">Nos desserts</Typography>
+                        <Grid container justify="center">
+                            {dataCollections.map((product, id) => (
+                                product.type && product.type === "dessert" &&
+                                <Grid item xs={12} sm={8} md={6}>
+                                    <Product
+                                        className={classes.productCard}
+                                        key={id}
+                                        item={product}
+                                    />
+                                </Grid>
+                            )
+                            )}
+                        </Grid>
+                    </Box>
                 </Box>
             }
 
