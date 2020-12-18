@@ -33,6 +33,10 @@ const useStyles = makeStyles({
     },
     dessertTitle: {
         // marginBottom: theme.spacing(4)
+    },
+    gridContainer: {
+        paddingLeft: "10vw",
+        paddingRight: "10vw"
     }
 })
 
@@ -69,12 +73,14 @@ const ViewOrder = () => {
                     <Box className={classes.containerMeal}>
                         <Typography className={classes.mealTitle} variant="h4">Nos Plats</Typography>
                         <Grid container
+                            className={classes.gridContainer}
+                            spacing={3}
                             justify="center"
-                            alignItems="center"
+
                         >
-                            {dataCollections.map((product, id) => (
+                            {dataCollections && dataCollections.map((product, id) => (
                                 product.type && product.type === "meal" &&
-                                <Grid item xs={12} sm={8} md={6}>
+                                <Grid item xs={12} sm={6} md={4} lg={2}>
                                     <Product
                                         className={classes.productCard}
                                         key={id}
@@ -87,10 +93,14 @@ const ViewOrder = () => {
                     </Box>
                     <Box className={classes.containerDessert}>
                         <Typography className={classes.dessertTitle} variant="h4">Nos desserts</Typography>
-                        <Grid container justify="center">
-                            {dataCollections.map((product, id) => (
+                        <Grid container
+                            justify="center"
+                            className={classes.gridContainer}
+                            spacing={3}
+                        >
+                            {dataCollections && dataCollections.map((product, id) => (
                                 product.type && product.type === "dessert" &&
-                                <Grid item xs={12} sm={8} md={6}>
+                                <Grid item xs={12} sm={6} md={4} lg={2}>
                                     <Product
                                         className={classes.productCard}
                                         key={id}
