@@ -16,7 +16,7 @@ const theme = createMuiTheme()
 const useStyles = makeStyles({
     root: {
         maxWidth: 345,
-        maxHeight: 345,
+
 
 
     },

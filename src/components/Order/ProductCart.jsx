@@ -11,10 +11,13 @@ import { addToCart, reduceItem, removeItem } from '../../redux/actions/cartActio
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 345,
+        maxWidth: 600,
+        minHeight: 200,
+        display: "flex"
     },
     media: {
-        height: 140,
+        minheight: 140,
+        minWidth: 200
     },
 });
 
@@ -47,9 +50,6 @@ const Product = ({ item }) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" color="primary">
-                    commander
-                </Button>
                 <Button onClick={() => dispatch(removeItem(item))} size="small" color="primary">
                     X
                 </Button>
