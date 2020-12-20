@@ -60,7 +60,7 @@ const ViewCart = () => {
                                         variant="h6">TOTAL : {totalPrice}€</Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <StripeButton />
+                                    <StripeButton price={totalPrice} />
                                 </CardActions>
                             </Card>
                         </Box>
