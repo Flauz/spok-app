@@ -1,25 +1,58 @@
-import logo from './logo.svg';
+import React, {useEffect} from "react"
+import {useSelector, useDispatch} from "react-redux"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import {auth , handleUserProfile} from "./firebase/utils"
+import {setCurrentUser} from './redux/actions/userActions'
+import Header from "./components/Header/Header"
+import Routes from './Routes'
+import { AnimatePresence } from 'framer-motion'
 import './App.css';
+import Footer from "./components/Footer/Footer";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-function App() {
+const theme = createMuiTheme({
+  palette:{
+    background: {
+      default:"#faf2e6"
+    }
+  }
+})
+
+const App = () => {
+  const {currentUser} = useSelector(user => user.userReducer)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const authListener = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth){
+        const userRef = await handleUserProfile(userAuth)
+          userRef.onSnapshot(snapshot => {
+            setCurrentUser({ 
+              id: snapshot.id,
+              ...snapshot.data()
+          })
+        })
+      };
+      dispatch(setCurrentUser(userAuth))
+    })
+
+    return () => {
+      authListener()
+    }
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MuiThemeProvider theme={theme} >
+        <CssBaseline />
+        <Header />
+        <AnimatePresence>
+          <Routes currentUser={currentUser}/>
+        </AnimatePresence>
+        <Footer />
+      </MuiThemeProvider>
     </div>
   );
 }
 
-export default App;
+export default App
