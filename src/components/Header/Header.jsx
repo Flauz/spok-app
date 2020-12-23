@@ -32,7 +32,13 @@ const useStyles = makeStyles((theme) => ({
             margin: theme.spacing(1)
         },
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        [theme.breakpoints.down("md")]: {
+            
+            display: "flex",
+            flexDirection : "column-reverse",
+            alignItems: "center"
+        },
     }
 }));
 
@@ -111,8 +117,6 @@ const Header = () => {
                             </Menu>
                         )
                         }
-                    </Box>
-                    <Box>
                         <IconButton component={Link} to="/cart" aria-controls="simple-menu" aria-haspopup="true">
                             <LocalMallIcon />
                             {cartItems.length > 0 &&

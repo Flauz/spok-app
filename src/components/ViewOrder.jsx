@@ -26,17 +26,21 @@ const useStyles = makeStyles({
         margin: "auto"
     },
     containerDessert: {
-        // margin: theme.spacing(4)
+        margin: theme.spacing(4)
     },
     mealTitle: {
-        // marginBottom: theme.spacing(5)
+        marginBottom: theme.spacing(5)
     },
     dessertTitle: {
         // marginBottom: theme.spacing(4)
     },
     gridContainer: {
+
+        margin: 0,
+        width: '100%',
         paddingLeft: "10vw",
         paddingRight: "10vw"
+
     }
 })
 
@@ -74,7 +78,7 @@ const ViewOrder = () => {
                         <Typography className={classes.mealTitle} variant="h4">Nos Plats</Typography>
                         <Grid container
                             className={classes.gridContainer}
-                            spacing={3}
+                            spacing={4}
                             justify="center"
 
                         >
@@ -96,7 +100,7 @@ const ViewOrder = () => {
                         <Grid container
                             justify="center"
                             className={classes.gridContainer}
-                            spacing={3}
+                            spacing={4}
                         >
                             {dataCollections && dataCollections.map((product, id) => (
                                 product.type && product.type === "dessert" &&

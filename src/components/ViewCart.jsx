@@ -8,13 +8,20 @@ import { makeStyles } from '@material-ui/core/styles';
 const theme = createMuiTheme()
 
 const useStyles = makeStyles(theme => ({
+    container: {
+
+    },
     boxSubContainer: {
         [theme.breakpoints.between("xs", "md")]: {
+            margin: 0,
+            width: '100%',
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
         },
-        [theme.breakpoints.up("md")]: {
+        [theme.breakpoints.up("xs")]: {
+            margin: 0,
+            width: '100%',
             display: "flex",
             justifyContent: "space-around",
             alignItems: "center"
@@ -45,7 +52,7 @@ const ViewCart = () => {
     const classes = useStyles()
 
     return (
-        <Box>
+        <Box className={classes.container}>
             <h1>Votre panier</h1>
             <Box>
                 {cartItems.length ? (
